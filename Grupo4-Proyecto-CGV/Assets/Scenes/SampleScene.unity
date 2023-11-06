@@ -270,7 +270,7 @@ CharacterController:
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
+  m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &239011377
 Transform:
@@ -305,6 +305,7 @@ MonoBehaviour:
   verticalMove: 0
   gravity: 9.8
   fallVelocity: 0
+  jumpForce: 0
   player: {fileID: 0}
   playerSpeed: 10
   mainCamera: {fileID: 963194227}
@@ -804,13 +805,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.24613632, y: 0.59447205, z: -0.19786605, w: -0.73950595}
-  m_LocalPosition: {x: 8.683283, y: 9.6875105, z: 5.952318}
+  m_LocalRotation: {x: -0.26742253, y: 0.37430954, z: -0.15487106, w: -0.8742955}
+  m_LocalPosition: {x: 6.85, y: 10.45, z: 0.78}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 18.599, y: 125.477, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.701, y: 315.253, z: 4.988}
 --- !u!1 &965835745
 GameObject:
   m_ObjectHideFlags: 0
