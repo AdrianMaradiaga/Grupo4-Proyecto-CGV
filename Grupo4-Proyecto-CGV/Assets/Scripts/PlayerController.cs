@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,11 @@ public class PlayerController : MonoBehaviour
     public Camera mainCamera;          // Cámara principal
     private Vector3 camForward;       // Dirección hacia adelante de la cámara
     private Vector3 camRight;         // Dirección hacia la derecha de la cámara
+
+    public bool isOnSlope = false;    // Indica si el jugador está en una pendiente
+    private Vector3 hitNormal;        // Normal de la superficie golpeada
+    public float slideVelocity;       // Velocidad de deslizamiento en pendientes
+    public float slopForceDown;       // Fuerza hacia abajo al deslizar en pendientes
 
     // Método llamado al inicio del juego
     void Start()
@@ -101,5 +107,27 @@ public class PlayerController : MonoBehaviour
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
         }
+        SlideDown();
     }
+
+    // Función para deslizarse en pendientes
+    public void SlideDown()
+    {
+        isOnSlope = Vector3.Angle(Vector3.up, hitNormal) >= player.slopeLimit;
+        if (isOnSlope)
+        {
+            movePlayer.x += ((1f - hitNormal.y) * hitNormal.x) * slideVelocity;
+            movePlayer.z += ((1f - hitNormal.y) * hitNormal.z) * slideVelocity;
+
+            movePlayer.y += slopForceDown;
+        }
+    }
+
+
+    // Método llamado cuando el CharacterController choca con un collider
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        hitNormal = hit.normal;
+    }
+
 }
