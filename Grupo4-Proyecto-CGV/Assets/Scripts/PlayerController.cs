@@ -27,11 +27,16 @@ public class PlayerController : MonoBehaviour
     public float slideVelocity;       // Velocidad de deslizamiento en pendientes
     public float slopForceDown;       // Fuerza hacia abajo al deslizar en pendientes
 
+    //variables animacion
+    public Animator playerAnimatorController;
+ 
+
     // Método llamado al inicio del juego
     void Start()
     {
         // Inicializa el componente CharacterController
         player = GetComponent<CharacterController>();
+        playerAnimatorController = GetComponent<Animator>();
     }
 
     // Método llamado en cada fotograma del juego
@@ -44,6 +49,8 @@ public class PlayerController : MonoBehaviour
         // Crear un vector de entrada del jugador y limitar su magnitud a 1
         playerInput = new Vector3(horizontalMove, 0, verticalMove);
         playerInput = Vector3.ClampMagnitude(playerInput, 1);
+
+        playerAnimatorController.SetFloat("PlayerWalkVelocity", playerInput.magnitude * playerSpeed);
 
         // Calcular la dirección de la cámara en relación al personaje
         camDirection();
@@ -89,6 +96,7 @@ public class PlayerController : MonoBehaviour
         {
             fallVelocity = jumpForce;
             movePlayer.y = fallVelocity;
+            playerAnimatorController.SetTrigger("PlayerJump");
         }
     }
 
@@ -106,7 +114,9 @@ public class PlayerController : MonoBehaviour
             // El jugador no está en el suelo, aplicar la gravedad
             fallVelocity -= gravity * Time.deltaTime;
             movePlayer.y = fallVelocity;
+            playerAnimatorController.SetFloat("PlayerVerticalVelocity", player.velocity.y);
         }
+        playerAnimatorController.SetBool("IsGrounded", player.isGrounded);
         SlideDown();
     }
 
@@ -130,4 +140,8 @@ public class PlayerController : MonoBehaviour
         hitNormal = hit.normal;
     }
 
+    private void OnAnimatorMove()
+    {
+        
+    }
 }
